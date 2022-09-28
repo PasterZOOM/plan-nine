@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
-import { saveToLocalStorage } from 'src/utils/utils'
+import { saveToLocalStorage } from 'utils/localStorageUtils'
 
 const Home: NextPage = () => {
 
@@ -9,9 +9,7 @@ const Home: NextPage = () => {
   }, [])
 
   return (
-    <main>
-      <h1>Hello</h1>
-    </main>
+    <h1 className="text-red-800">Hello</h1>
   )
 }
 

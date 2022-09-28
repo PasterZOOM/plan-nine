@@ -1,24 +1,26 @@
-import { Book, GetBooksResponse } from 'pages/books/interfaces'
+import { IBook, IGetBooksResponse } from 'pages/books/interfaces'
+import { NextPage } from 'next'
+import { BookCard } from 'components/BookCard/BookCard'
 
-interface PropsType {
-  books: Book[]
+interface IProps {
+  books: IBook[]
 }
 
-const Books = ({books}: PropsType) => {
+const Index: NextPage<IProps> = ({books}) => {
   return (
-    <ul>
-      {books.map((book: any) => (
-        <li key={book.id}>{book.title}</li>
+    <ul className={"flex flex-col justify-between"}>
+      {books.map(book => (
+        <BookCard key={book.id} book={book}/>
       ))}
     </ul>
   )
 }
-export default Books
+export default Index
 
 export async function getStaticProps() {
 
   const res = await fetch(`${process.env.BASE_URL}/books`)
-  const data: GetBooksResponse = await res.json()
+  const data: IGetBooksResponse = await res.json()
 
   return {
     props: {
