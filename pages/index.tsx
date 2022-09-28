@@ -3,8 +3,9 @@ import { useEffect } from 'react'
 import { saveToLocalStorage } from 'src/utils/utils'
 
 const Home: NextPage = () => {
+
   useEffect(() => {
-    saveToLocalStorage('VERSION', process.env.VERSION)
+    saveToLocalStorage('VERSION', process.env.NEXT_PUBLIC_VERSION)
   }, [])
 
   return (
