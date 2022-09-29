@@ -14,7 +14,7 @@ const Book: NextPage<PropsType> = ({book: serverBook}) => {
 
   useEffect(() => {
     async function load() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/books/${router.query.id}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/books/${router.query.id}/`)
       return await response.json()
     }
 
@@ -30,7 +30,7 @@ const Book: NextPage<PropsType> = ({book: serverBook}) => {
   }
 
   return (
-    <div>
+    <div className={"flex justify-center"}>
       <BookCard book={book}>
         {book.subjects && (<div className={'mt-4'}>
           {book.subjects.map((subject, index) => (
@@ -48,7 +48,7 @@ Book.getInitialProps = async ({query, req}: BookNextPageContext) => {
     return {book: null}
   }
 
-  const response = await fetch(`${process.env.API_URL}/books/${query.id}`)
+  const response = await fetch(`${process.env.API_URL}/books/${query.id}/`)
   const book: Book = await response.json()
 
   return {

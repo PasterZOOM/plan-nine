@@ -10,8 +10,8 @@ type PropsType = {
 
 export const BookCard: FC<PropsType> = ({book, children}) => {
   return (
-    <div className={'p-4 rounded-lg border-gray-600 border-2 my-2 w-72 flex' +
-      ' flex-col items-center'}>
+    <div className={'p-4 rounded-lg border-gray-400 border-2 my-2 w-72 flex flex-col items-center' +
+      ' drop-shadow-lg'}>
       <Image src={book.formats['image/jpeg']}
              alt={`${book.title} cover`}
              width={'100px'}
