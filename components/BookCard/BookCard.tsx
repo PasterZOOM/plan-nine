@@ -21,6 +21,7 @@ export const BookCard: FC<PropsType> = ({book, children}) => {
       {book.authors.map((author, index) => (
         <Author key={index} author={author}/>
       ))}
+      <span>Downloads: <b>{book.download_count}</b></span>
       {children}
     </div>
   )

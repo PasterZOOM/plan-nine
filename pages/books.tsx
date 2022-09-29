@@ -85,7 +85,6 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
       </ul>
       {books.length === 0 && <span className={"p-40 text-4xl"}>book list is empty</span>}
     </div>
-
   )
 }
 
