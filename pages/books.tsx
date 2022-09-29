@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Search } from 'components/Search/Search'
 import { Language } from 'components/Language/Language'
 import { getQuery } from 'utils/getQuery'
+import { saveToLocalStorage } from 'utils/localStorageUtils'
 
 type PropsType = {
   books: Book[],
@@ -47,6 +48,7 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
     }
   }, [fetching, loadBooks, next])
   useEffect(() => {
+    saveToLocalStorage('VERSION', process.env.NEXT_PUBLIC_VERSION)
     document.addEventListener('scroll', scrollHandler)
     return () => {
       document.removeEventListener('scroll', scrollHandler)
@@ -75,8 +77,8 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
       <ul className={'flex flex-wrap justify-around max-w-screen-xl gap-5'}>
         {books.map(book => (
           <li key={book.id}>
-            <Link href={`/book/${encodeURIComponent(book.id)}`}>
-              <a><BookCard book={book}/></a>
+            <Link href={`/book/${encodeURIComponent(book.id)}`} >
+              <a className={'visited:text-gray-300 visited:opacity-50'}><BookCard book={book}/></a>
             </Link>
           </li>
         ))}
