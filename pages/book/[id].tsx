@@ -15,7 +15,7 @@ const Book: NextPage<PropsType> = ({book: serverBook}) => {
 
   useEffect(() => {
     async function load() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/books/${router.query.id}/`)
+      const response = await fetch(`https://gutendex.com/books/${router.query.id}/`)
       return await response.json()
     }
 
@@ -31,12 +31,14 @@ const Book: NextPage<PropsType> = ({book: serverBook}) => {
   }
 
   return (
-    <div className={"mx-auto max-w-screen-xl"}>
+    <div className={'mx-auto max-w-screen-xl'}>
       <Link href="/books" passHref>
-        <button className="m-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-          Go Back</button>
+        <button
+          className="m-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+          Go Back
+        </button>
       </Link>
-      <div className={"flex justify-center"}>
+      <div className={'flex justify-center'}>
         <BookCard book={book}>
           {book.subjects && (<div className={'mt-4'}>
             {book.subjects.map((subject, index) => (
@@ -56,7 +58,7 @@ Book.getInitialProps = async ({query, req}: BookNextPageContext) => {
     return {book: null}
   }
 
-  const response = await fetch(`${process.env.API_URL}/books/${query.id}/`)
+  const response = await fetch(`https://gutendex.com/books/${query.id}/`)
   const book: Book = await response.json()
 
   return {

@@ -34,7 +34,7 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
   }, [books, next])
   const loadSearch = useCallback(async () => {
     const query = getQuery(search)
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/books/${query}`)
+    const res = await fetch(`https://gutendex.com/books/${query}`)
     const data: GetBooksResponse = await res.json()
     setBooks(data.results)
     setNext(data.next)
@@ -90,8 +90,7 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-
-  const res = await fetch(`${process.env.BASE_URL}/books`)
+  const res = await fetch(`https://gutendex.com/books`)
   const data: GetBooksResponse = await res.json()
 
   return {
