@@ -1,30 +1,33 @@
-export interface IGetBooksResponse {
+import { NextPageContext } from 'next'
+
+export type GetBooksResponse = {
   count: number;
-  next: string;
+  next: string | null;
   previous: null;
-  results: IBook[];
+  results: Book[];
 }
 
-export interface IBook {
+export type Book = {
   id: number;
   title: string;
-  authors: IAuthor[];
+  authors: Person[];
   subjects: string[];
+  translators: Person[];
   bookshelves: string[];
   languages: string[];
-  copyright: boolean;
+  copyright: boolean | null;
   media_type: string;
-  formats: IFormats;
+  formats: Format;
   download_count: number;
 }
 
-export interface IAuthor {
+export type Person = {
   name: string;
-  birth_year: number;
-  death_year: number;
+  birth_year: number | null;
+  death_year: number | null;
 }
 
-export interface IFormats {
+export type Format = {
   'application/x-mobipocket-ebook': string;
   'application/epub+zip': string;
   'application/rdf+xml': string;
@@ -32,4 +35,9 @@ export interface IFormats {
   'text/plain; charset=utf-8': string;
   'image/jpeg': string;
   'text/html': string;
+}
+export type BookNextPageContext = NextPageContext & {
+  query: {
+    id: string
+  }
 }

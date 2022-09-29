@@ -1,11 +1,11 @@
-import { IAuthor } from 'pages/books/interfaces'
+import { Person } from 'types/types'
 import { FC } from 'react'
 
-interface IAuthorProps {
-  author: IAuthor
+type PropsType = {
+  author: Person
 }
 
-export const Author: FC<IAuthorProps> = ({author}) => {
+export const Author: FC<PropsType> = ({author}) => {
   return (
     <div className={'text-center'}>
       <h4 className={'text-lg'}>{author.name}</h4>
