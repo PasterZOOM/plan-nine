@@ -1,9 +1,11 @@
-import { Book, GetBooksResponse } from 'types/types'
+import { Book, GetBooksResponse, SearchParamsType } from 'types/types'
 import { GetStaticProps, NextPage } from 'next'
 import { BookCard } from 'components/BookCard/BookCard'
 import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Search } from 'components/Search/Search'
+import { Language } from 'components/Language/Language'
+import { getQuery } from 'utils/getQuery'
 
 type PropsType = {
   books: Book[],
@@ -14,7 +16,7 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
   const [books, setBooks] = useState(serverBooks)
   const [next, setNext] = useState<string | null>(serverNext)
   const [fetching, setFetching] = useState(false)
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState<SearchParamsType>({text: '', languages: []})
 
   const scrollHandler = () => {
     if (document.documentElement.scrollHeight - (document.documentElement.scrollTop + window.innerHeight) < 100) {
@@ -29,12 +31,13 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
       setNext(data.next)
     }
   }, [books, next])
-  const loadSearch = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/books/${search && `?search=${search}`}`)
+  const loadSearch = useCallback(async () => {
+    const query = getQuery(search)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/books/${query}`)
     const data: GetBooksResponse = await res.json()
     setBooks(data.results)
     setNext(data.next)
-  }
+  }, [search])
 
   useEffect(() => {
     if (fetching) {
@@ -53,8 +56,21 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
   return (
     <div className={'flex flex-col justify-center items-center'}>
       <div className={'m-4'}>
-        <Search value={search} setValue={setSearch} pressEnter={loadSearch}/>
-        {/*<Languages/>*/}
+        <Search search={search}
+                setSearch={setSearch}
+                pressEnter={loadSearch}/>
+        <div className={'flex justify-between'}>
+          <Language value={search}
+                    setValue={setSearch}
+                    char={'en'}
+                    name={'English'}
+                    changeValue={loadSearch}/>
+          <Language value={search}
+                    setValue={setSearch}
+                    char={'fr'}
+                    name={'France'}
+                    changeValue={loadSearch}/>
+        </div>
       </div>
       <ul className={'flex flex-wrap justify-around max-w-screen-xl gap-5'}>
         {books.map(book => (
@@ -65,6 +81,7 @@ const Books: NextPage<PropsType> = ({books: serverBooks, next: serverNext}) => {
           </li>
         ))}
       </ul>
+      {books.length === 0 && <span className={"p-40 text-4xl"}>book list is empty</span>}
     </div>
 
   )

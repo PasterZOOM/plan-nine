@@ -41,3 +41,7 @@ export type BookNextPageContext = NextPageContext & {
     id: string
   }
 }
+export type SearchParamsType = {
+  text: string
+  languages: string[]
+}
